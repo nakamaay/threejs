@@ -46,7 +46,7 @@ function init() {
   //光源
   const dirLight = new THREE.SpotLight(0xffffff, 1.5); //color,強度
   dirLight.position.set(-200, 300, 300);
-  dirLight.castShadow = true;
+  dirLight.castShadow = false;
   scene.add(dirLight);
 
   //レンダラー
@@ -56,7 +56,7 @@ function init() {
   });
   renderer.setClearColor(new THREE.Color(0xffffff));
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.enabled = false;
 
   const geometry = new THREE.PlaneGeometry(2, 2);
   const material = new THREE.MeshBasicMaterial({
@@ -70,7 +70,7 @@ function init() {
   const loader = new FBXLoader();
   //オブジェクト読み込み
   loader.load(
-    "../assets/Capoeira.fbx",
+    "../assets/untitled.fbx",
     function (object) {
       console.log(object);
       object.scale.set(1, 1, 1);
@@ -137,7 +137,7 @@ function init() {
     }
 
     controls.update();
-    render();
+    // render();
     // controls;
     requestAnimationFrame(animate);
     document.onkeydown = function (e) {

@@ -1,6 +1,8 @@
 import * as THREE from "https://unpkg.com/three@0.126.1/build/three.module.js";
 import { OrbitControls } from "https://unpkg.com/three@0.126.1/examples/jsm/controls/OrbitControls.js";
 import { FBXLoader } from "https://unpkg.com/three@0.126.1/examples/jsm/loaders/FBXLoader.js";
+import playertest from "./model_load.js";
+playertest();
 // import CANNON from './../../cannon.min.js';
 // var world = new CANNON.World();
 // console.log(world);
@@ -57,7 +59,7 @@ function init() {
   renderer.setClearColor(new THREE.Color(0xffffff));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = false;
-
+  /*
   const geometry = new THREE.PlaneGeometry(2, 2);
   const material = new THREE.MeshBasicMaterial({
     color: 0xffff00,
@@ -66,7 +68,7 @@ function init() {
   const plane = new THREE.Mesh(geometry, material);
   scene.add(plane);
   console.log(plane)
-
+*/
   const loader = new FBXLoader();
   //オブジェクト読み込み
   loader.load(
@@ -79,7 +81,6 @@ function init() {
 
       //Animation Actionを生成
       const action = mixer.clipAction(object.animations[0]);
-
 
       //ループ設定（1回のみ）
       // action.setLoop(THREE.LoopOnce);

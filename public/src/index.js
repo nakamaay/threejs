@@ -2,6 +2,8 @@ import * as THREE from "https://unpkg.com/three@0.126.1/build/three.module.js";
 import { OrbitControls } from "https://unpkg.com/three@0.126.1/examples/jsm/controls/OrbitControls.js";
 import { FBXLoader } from "https://unpkg.com/three@0.126.1/examples/jsm/loaders/FBXLoader.js";
 import playertest from "./model_load.js";
+import InitBar from "./attack.js";
+InitBar();
 playertest();
 // import CANNON from './../../cannon.min.js';
 // var world = new CANNON.World();
@@ -30,7 +32,7 @@ function init() {
     90,
     window.innerWidth / window.innerHeight,
     0.1,
-    5000
+    800
   );
   console.log(`${window.innerHeight}${window.innerWidth}`);
   //カメラセット
@@ -69,21 +71,33 @@ function init() {
   scene.add(plane);
   console.log(plane)
 */
+  const TowerGeometry = new THREE.CylinderGeometry(40, 40, 100, 10, 2, true);
+  const TowerMaterial = new THREE.MeshBasicMaterial({
+    color: 0xffff00,
+    side: THREE.DoubleSide,
+  });
+  const Tower = new THREE.Mesh(TowerGeometry, TowerMaterial);
+  scene.add(Tower);
+
   const loader = new FBXLoader();
   //オブジェクト読み込み
   loader.load(
     "../assets/untitled.fbx",
     function (object) {
+      const modeLoadEnd = function (_mesh) {
+
+      
       console.log(object);
       object.scale.set(1, 1, 1);
       //シーン内の特定のオブジェクトのアニメーション用のプレーヤー(アニメーションの調整)
+
       mixer = new THREE.AnimationMixer(object);
 
       //Animation Actionを生成
       const action = mixer.clipAction(object.animations[0]);
 
       //ループ設定（1回のみ）
-      // action.setLoop(THREE.LoopOnce);
+      action.setLoop(THREE.LoopOnce);
 
       //アニメーションを再生する
       action.play();
@@ -96,7 +110,10 @@ function init() {
           child.receiveShadow = false;
         }
       });
-      scene.add(object);
+      // scene.add(object);
+      
+    };
+      // setTimeout(modeLoadEnd( object ),10);
     },
     (xhr) => {
       console.log((xhr.loaded / xhr.total) * 100 + "% loaded");

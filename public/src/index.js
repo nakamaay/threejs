@@ -1,10 +1,13 @@
 import * as THREE from "https://unpkg.com/three@0.126.1/build/three.module.js";
 import { OrbitControls } from "https://unpkg.com/three@0.126.1/examples/jsm/controls/OrbitControls.js";
 import { FBXLoader } from "https://unpkg.com/three@0.126.1/examples/jsm/loaders/FBXLoader.js";
-import playertest from "./model_load.js";
+// import playertest from "./model_load.js";
 import InitBar from "./attack.js";
 InitBar();
-playertest();
+// playertest();
+const skill =[
+  {"Damage":10,"AttackRange":20, "Speed":10}
+]
 // import CANNON from './../../cannon.min.js';
 // var world = new CANNON.World();
 // console.log(world);
@@ -16,7 +19,7 @@ let clock = new THREE.Clock();
 let mixer;
 
 let player;
-const speed = 1;
+const speed = 10;
 init();
 
 // 読み込み
@@ -110,10 +113,11 @@ function init() {
           child.receiveShadow = false;
         }
       });
-      // scene.add(object);
-      
+      scene.add(object);
+      player = object;
+
     };
-      // setTimeout(modeLoadEnd( object ),10);
+      setTimeout(modeLoadEnd( object ),10);
     },
     (xhr) => {
       console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
@@ -162,16 +166,21 @@ function init() {
       console.log(e.key);
       switch (e.key) {
         case "w":
-          player.position.x += speed;
+          player.position.x += skill.Speed;
+          console.log(player.position);
           break;
         case "s":
-          player.position.x -= speed;
+          player.position.x -= skill.Speed;
+          console.log(player.position);
           break;
         case "a":
-          player.position.z -= speed;
+          player.position.z -= skill.Speed;
+          console.log(player.position);
           break;
         case "d":
-          player.position.z += speed;
+          player.position.z += skill.Speed;
+          console.log(player.position);
+          break;
       }
     };
   }

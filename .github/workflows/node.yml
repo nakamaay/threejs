@@ -22,4 +22,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: deploy
-      run: npm install --global now && now --target production --token ${{ secrets.ZEIT_TOKEN }}
+      run: npm install && npx now --target production --token ${{ secrets.ZEIT_TOKEN }}

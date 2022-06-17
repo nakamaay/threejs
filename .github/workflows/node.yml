@@ -17,10 +17,26 @@ jobs:
     - run: npm install
       env:
         CI: true
-  deploy:
-    name: Publish to prod
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: deploy
-      run: npm install && npx now --target production --token ${{ secrets.ZEIT_TOKEN }}
+
+    - name: Slack Notification on Success
+      if: ${{ success()}}
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_TITLE: Deploy Success
+        SLACK_COLO: good
+
+
+    - name: Slack Notification on Failure
+      if: ${{ failure()}}
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_TITLE: Deploy Failure
+        SLACK_COLO: danger
+
+  # deploy:
+  #   name: Publish to prod
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: deploy
+  #     run: npm install && npx now --target production --token ${{ secrets.ZEIT_TOKEN }}

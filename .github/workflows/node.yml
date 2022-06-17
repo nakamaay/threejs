@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [8.x, 10.x, 12.x]
+        node-version: [10.x, 12.x]
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -21,6 +21,5 @@ jobs:
     name: Publish to prod
     runs-on: ubuntu-latest
     steps:
-    - run: |
-      npm install --global now
-      now --target production --token ${{ secrets.ZEIT_TOKEN }}
+    - name: deploy
+      run: npm install --global now && now --target production --token ${{ secrets.ZEIT_TOKEN }}

@@ -1,7 +1,11 @@
 name: Deploy to Now
 
 on: [push]
-
+env:
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL}}
+  SLACK_USERNAME: GithubAction
+  SLACK_CHANNEL: github_action
+  SLACK_ICON: https://icongr.am/devicon/github-original.svg?size=128&color=currentColor
 jobs:
   build:
     runs-on: ubuntu-latest

@@ -20,7 +20,7 @@ jobs:
   deploy:
     name: Publish to prod
     runs-on: ubuntu-latest
-    - uses: actions/checkout@v2
     steps:
+    - uses: actions/checkout@v2
     - name: deploy
       run: npm install && npx now --target production --token ${{ secrets.ZEIT_TOKEN }}

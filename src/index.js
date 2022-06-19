@@ -1,11 +1,11 @@
-import * as THREE from "https://unpkg.com/three@0.126.1/build/three.module.js";
-import { OrbitControls } from "https://unpkg.com/three@0.126.1/examples/jsm/controls/OrbitControls.js";
-import { FBXLoader } from "https://unpkg.com/three@0.126.1/examples/jsm/loaders/FBXLoader.js";
+import {AnimationMixer, AxesHelper, Clock, Color, CylinderGeometry,DoubleSide,LoopOnce,Mesh,MeshBasicMaterial, PerspectiveCamera, Scene, SpotLight, sRGBEncoding, Vector3, WebGLRenderer} from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 // import playertest from "./model_load.js";
 
 // playertest();
-const skill = [
-  { "Damage": 10, "AttackRange": 20, "Speed": 10 }
+const skill =[
+  {"Damage":10,"AttackRange":20, "Speed":10}
 ]
 // import CANNON from './../../cannon.min.js';
 // var world = new CANNON.World();
@@ -14,7 +14,7 @@ let camera;
 let scene;
 let renderer;
 let model;
-let clock = new THREE.Clock();
+let clock = new Clock();
 let mixer;
 
 let player;
@@ -24,13 +24,13 @@ init();
 // 読み込み
 function init() {
   //シーン
-  scene = new THREE.Scene();
+  scene = new Scene();
 
   //中心線の追加
-  scene.add(new THREE.AxesHelper(5));
+  scene.add(new AxesHelper(5));
 
   //カメラの作成
-  camera = new THREE.PerspectiveCamera(
+  camera = new PerspectiveCamera(
     90,
     window.innerWidth / window.innerHeight,
     0.1,
@@ -42,7 +42,7 @@ function init() {
   camera.position.y = 300;
   camera.position.z = 500;
   //原点にセット
-  camera.lookAt(new THREE.Vector3(0, 0, 0));
+  camera.lookAt(new Vector3(0, 0, 0));
 
   // 滑らかにカメラコントローラーを制御する
   const controls = new OrbitControls(camera, document.body);
@@ -50,17 +50,17 @@ function init() {
   controls.dampingFactor = 0.2;
 
   //光源
-  const dirLight = new THREE.SpotLight(0xffffff, 1.5); //color,強度
+  const dirLight = new SpotLight(0xffffff, 1.5); //color,強度
   dirLight.position.set(-200, 300, 300);
   dirLight.castShadow = false;
   scene.add(dirLight);
 
   //レンダラー
-  renderer = new THREE.WebGLRenderer({
+  renderer = new WebGLRenderer({
     alpha: true,
     antialias: true,
   });
-  renderer.setClearColor(new THREE.Color(0xffffff));
+  renderer.setClearColor(new Color(0xffffff));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = false;
   /*
@@ -73,28 +73,33 @@ function init() {
   scene.add(plane);
   console.log(plane)
 */
-  const TowerGeometry = new THREE.CylinderGeometry(40, 40, 100, 10, 2, true);
-  const TowerMaterial = new THREE.MeshBasicMaterial({
+  const TowerGeometry = new CylinderGeometry(40, 40, 100, 10, 2, true);
+  const TowerMaterial = new MeshBasicMaterial({
     color: 0xffff00,
-    side: THREE.DoubleSide,
+    side: DoubleSide,
   });
-  const Tower = new THREE.Mesh(TowerGeometry, TowerMaterial);
+  const Tower = new Mesh(TowerGeometry, TowerMaterial);
   scene.add(Tower);
 
   const loader = new FBXLoader();
   //オブジェクト読み込み
-  loader.load("../assets/untitled.fbx", function (object) {
-    const modeLoadEnd = function (_mesh) {
+  loader.load(
+    "../assets/untitled.fbx",
+    function (object) {
+      const modeLoadEnd = function (_mesh) {
+
+      
+      console.log(object);
       object.scale.set(1, 1, 1);
       //シーン内の特定のオブジェクトのアニメーション用のプレーヤー(アニメーションの調整)
 
-      mixer = new THREE.AnimationMixer(object);
+      mixer = new AnimationMixer(object);
 
       //Animation Actionを生成
       const action = mixer.clipAction(object.animations[0]);
 
       //ループ設定（1回のみ）
-      action.setLoop(THREE.LoopOnce);
+      action.setLoop(LoopOnce);
 
       //アニメーションを再生する
       action.play();
@@ -111,8 +116,14 @@ function init() {
       player = object;
 
     };
-    setTimeout(modeLoadEnd(object), 10);
-  },
+      setTimeout(modeLoadEnd( object ),10);
+    },
+    (xhr) => {
+      console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+    },
+    (error) => {
+      console.log(error);
+    }
   );
 
   //レンダラー実行関数
@@ -146,7 +157,6 @@ function init() {
     controls.update();
     // render();
     // controls;
-/*    
     requestAnimationFrame(animate);
     document.onkeydown = function (e) {
       console.log(e.key);
@@ -169,13 +179,12 @@ function init() {
           break;
       }
     };
-  */
   }
 
   animate();
 
   //読み込んだシーンが暗いので、明るくする
-  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.outputEncoding = sRGBEncoding;
 
   document.getElementById("WebGL-output").appendChild(renderer.domElement);
 }

@@ -2,11 +2,10 @@ import * as THREE from "https://unpkg.com/three@0.126.1/build/three.module.js";
 import { OrbitControls } from "https://unpkg.com/three@0.126.1/examples/jsm/controls/OrbitControls.js";
 import { FBXLoader } from "https://unpkg.com/three@0.126.1/examples/jsm/loaders/FBXLoader.js";
 // import playertest from "./model_load.js";
-import InitBar from "./attack.js";
-InitBar();
+
 // playertest();
-const skill =[
-  {"Damage":10,"AttackRange":20, "Speed":10}
+const skill = [
+  { "Damage": 10, "AttackRange": 20, "Speed": 10 }
 ]
 // import CANNON from './../../cannon.min.js';
 // var world = new CANNON.World();
@@ -84,13 +83,8 @@ function init() {
 
   const loader = new FBXLoader();
   //オブジェクト読み込み
-  loader.load(
-    "../assets/untitled.fbx",
-    function (object) {
-      const modeLoadEnd = function (_mesh) {
-
-      
-      console.log(object);
+  loader.load("../assets/untitled.fbx", function (object) {
+    const modeLoadEnd = function (_mesh) {
       object.scale.set(1, 1, 1);
       //シーン内の特定のオブジェクトのアニメーション用のプレーヤー(アニメーションの調整)
 
@@ -117,17 +111,8 @@ function init() {
       player = object;
 
     };
-      setTimeout(modeLoadEnd( object ),10);
-    },
-    (xhr) => {
-      console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-
-      const progress = document.getElementById("progress");
-      progress.value = xhr.loaded / xhr.total;
-    },
-    (error) => {
-      console.log(error);
-    }
+    setTimeout(modeLoadEnd(object), 10);
+  },
   );
 
   //レンダラー実行関数
@@ -161,6 +146,7 @@ function init() {
     controls.update();
     // render();
     // controls;
+/*    
     requestAnimationFrame(animate);
     document.onkeydown = function (e) {
       console.log(e.key);
@@ -183,6 +169,7 @@ function init() {
           break;
       }
     };
+  */
   }
 
   animate();

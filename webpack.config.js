@@ -5,7 +5,8 @@ module.exports = {
     devtool: 'inline-source-map',
     entry: './src/index.js', // 入力元のファイル名(エントリポイント)
     output: {
-        filename: 'bundle.js' // 出力先のファイル名
+        path: path.resolve(__dirname,'public/src'),
+        filename: 'main.js' // 出力先のファイル名
     },
     resolve: {
         // 使用したいコントロールやレンダラを定義しておきます。(下記は一例です。使用しないものは除いておいてよいです)

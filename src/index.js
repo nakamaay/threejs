@@ -84,7 +84,7 @@ function init() {
   const loader = new FBXLoader();
   //オブジェクト読み込み
   loader.load(
-    "../assets/untitled.fbx",
+    "../assets/Capoeira.fbx",
     function (object) {
       const modeLoadEnd = function (_mesh) {
 

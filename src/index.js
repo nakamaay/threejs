@@ -99,7 +99,7 @@ function init() {
       const action = mixer.clipAction(object.animations[0]);
 
       //ループ設定（1回のみ）
-      action.setLoop(LoopOnce);
+      // action.setLoop(LoopOnce);
 
       //アニメーションを再生する
       action.play();
